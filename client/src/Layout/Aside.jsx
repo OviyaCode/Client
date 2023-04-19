@@ -1,0 +1,52 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
+import React from 'react';
+import { Menu } from '../menu';
+import { Link } from 'react-router-dom';
+import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
+function Aside() {
+  return (
+    <aside id="left-panel" className="left-panel">
+      <nav className="navbar navbar-expand-sm navbar-default">
+        <div id="main-menu" className="main-menu collapse navbar-collapse">
+          <ul className="nav navbar-nav">
+            {
+              Menu.map((menu, index) => (
+                menu.fixMenu ? (
+                  <React.Fragment key={index}>
+                    <li className="active">
+                      <Link className='link' to={menu.path}  >
+                        <i className="menu-icon fa fa-laptop"></i>{menu.name}
+                      </Link>
+                    </li>
+                    <li className="menu-title">Menu</li>
+                  </React.Fragment>
+                ) : (
+                  <React.Fragment key={index}>
+                    <li className="menu-item-has-children dropdown">
+                      <a href="#" className="dropdown-toggle link" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      <AdminPanelSettingsIcon style={{fontSize:24, marginRight:5, marginBottom:2}}/>{menu.name}</a>
+                      <ul className="sub-menu children dropdown-menu">
+                        {
+                          menu.children.map((child, cIndex) => (
+                            <li key={cIndex}><i className={menu.icon}></i>
+                              <Link className='link' to={child.path} >{child.name}</Link>
+                            </li>
+                          ))
+                        }
+                      </ul>
+
+                    </li>
+                  </React.Fragment>
+                )
+
+
+              ))
+            }
+          </ul>
+        </div>
+      </nav>
+    </aside>
+  );
+}
+
+export default Aside;
